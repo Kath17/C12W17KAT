@@ -49,4 +49,10 @@ router.patch("/songs/:id", async (req, res) => {
   return res.json(`User ${id} upadted succesfuly`);
 });
 
+router.delete("/songs/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  await pool.query(`DELETE FROM songs WHERE id= ${id}`);
+  res.json(`Song ${id} was eliminated`);
+});
+
 export default router;
