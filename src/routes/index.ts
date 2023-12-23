@@ -17,4 +17,26 @@ router.get("/songs/:id", async (req, res) => {
   return res.status(200).end(JSON.stringify(response.rows, null, 2));
 });
 
+router.post("/songs", async (req, res) => {
+  const { title, artist, album, year, genre } = req.body;
+  console.log(`${title} ${artist} ${album} ${year} ${genre}`);
+  const response: QueryResult = await pool.query(
+    "INSERT INTO songs (title, artist, album, year, genre) VALUES ($1, $2, $3, $4, $5);",
+    [title, artist, album, year, genre]
+  );
+  response;
+  return res.json({
+    message: "New song created succesfuly",
+    body: {
+      song: {
+        title,
+        artist,
+        album,
+        year,
+        genre,
+      },
+    },
+  });
+});
+
 export default router;
