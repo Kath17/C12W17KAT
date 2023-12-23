@@ -39,4 +39,14 @@ router.post("/songs", async (req, res) => {
   });
 });
 
+router.patch("/songs/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const { title, artist, album, year, genre } = req.body;
+  await pool.query(
+    "UPDATE songs SET title = $1, artist = $2, album = $3, year = $4, genre = $5 WHERE id = $6",
+    [title, artist, album, year, genre, id]
+  );
+  return res.json(`User ${id} upadted succesfuly`);
+});
+
 export default router;
